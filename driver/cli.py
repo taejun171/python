@@ -1,3 +1,5 @@
+from inputimeout import inputimeout, TimeoutOccurred
+
 
 CLI_PROMPT_STR = "cli# "
 
@@ -22,10 +24,19 @@ def cliUpdate(data:str):
     cliRunCmd(args[0], args[1:])
 
 def cliRunCmd(cmd, args):
+  print('')
   cmd_list[cmd](args)
+  print('')
+
+def cliRunStr(cli_str:str):
+  cliUpdate(cli_str)
 
 def cliKeepLoop():
-  input()
+  try:
+    inputimeout('', timeout=0.001)
+  except TimeoutOccurred:
+    return True
+  return False
 
 def cliPrintList():
   print("\n---------- cmd list ---------")

@@ -1,9 +1,11 @@
 from define import *
-from .info.info import InfoThread
+from .info.info_thread import InfoThread
+from .gui.gui_thread import GuiThread
 
 
 threads = [
-  InfoThread
+  InfoThread,
+  GuiThread
 ]
 
 
@@ -38,10 +40,10 @@ class Thread:
       ret = True
 
     if len(args) == 1 and args[0] == "list":
-      print("\n----- Thread List -----")
+      print("----- Thread List -----")
       for thread in self.thread_list:
         print(thread.name)
-      print("-----------------------\n")
+      print("-----------------------")
 
       ret = True
 

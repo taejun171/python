@@ -1,8 +1,9 @@
 import sys
 from os import path
+sys.path.append(path.dirname( path.dirname( path.abspath(__file__) ) ))
+
 from PySide6.QtWidgets import QApplication
 
-sys.path.append(path.dirname( path.dirname( path.abspath(__file__) ) ))
 
 from define import *
 from thread.thread import Thread
