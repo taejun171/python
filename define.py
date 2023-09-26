@@ -1,14 +1,39 @@
+"""
+Import
+"""
 import sys
 import time
 
-from driver.cli import cliAdd, cliKeepLoop, cliRunStr
+from lib.cli import cliAdd, cliKeepLoop, cliRunStr, cliMain
+
+from PySide6.QtCore import QThread
+
+from thread.info.info_thread import InfoThread
+from thread.gui.gui_thread import GuiThread
+
+from driver.gui.gui import MainWindow
 from driver.dxl import Dxl
+from driver.uart import Uart
 
-from lib.uart import *
 
+"""
+Define
+"""
 USE_CLI = True
 
 
+"""
+Variable
+"""
+threads = [
+  InfoThread,
+  GuiThread
+]
+
+
+"""
+Function
+"""
 def millis():
   return int(round(time.time() * 1000))
 

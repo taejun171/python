@@ -1,9 +1,4 @@
 from define import *
-from PySide6.QtCore import QThread
-
-
-from driver.gui.gui import MainWindow
-
 
 class GuiThread(QThread):
   def __init__(self):

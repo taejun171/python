@@ -1,14 +1,4 @@
 from define import *
-from .info.info_thread import InfoThread
-from .gui.gui_thread import GuiThread
-
-
-threads = [
-  InfoThread,
-  GuiThread
-]
-
-
 
 class Thread:
   def __init__(self):

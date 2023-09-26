@@ -1,7 +1,4 @@
 from define import *
-from PySide6.QtCore import QThread
-
-from driver.cli import cliMain
 
 class InfoThread(QThread):
   def __init__(self):
