@@ -27,7 +27,8 @@ class InfoThread(QThread):
     self.is_loop = True
     while self.is_loop:
       
-      cliMain()
+      if USE_CLI == True:
+        cliMain()
 
       self.pre_time = delayUntil(self.pre_time, 5)
     self.is_end = True
@@ -36,4 +37,5 @@ class InfoThread(QThread):
     ret = False
 
     if ret == False:
-      print("info")
+      pass
+      #print("info")

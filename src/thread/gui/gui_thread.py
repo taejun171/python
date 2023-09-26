@@ -2,7 +2,7 @@ from define import *
 from PySide6.QtCore import QThread
 
 
-from driver.gui import MainWindow
+from driver.gui.gui import MainWindow
 
 
 class GuiThread(QThread):

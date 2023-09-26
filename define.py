@@ -2,7 +2,11 @@ import sys
 import time
 
 from driver.cli import cliAdd, cliKeepLoop, cliRunStr
+from driver.dxl import Dxl
 
+from lib.uart import *
+
+USE_CLI = True
 
 
 def millis():

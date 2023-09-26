@@ -1,6 +1,5 @@
 from inputimeout import inputimeout, TimeoutOccurred
 
-
 CLI_PROMPT_STR = "cli# "
 
 cmd_list = {}
