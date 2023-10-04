@@ -1,13 +1,12 @@
+from define import *
 
-import sys
 import pickle
 
-import PySide6.QtGui
+#import PySide6.QtGui
 
-from ui.ui import *
-from PySide6.QtWidgets import QAbstractItemView, QStyledItemDelegate
+from .ui.ui import *
+from PySide6.QtWidgets import QStyledItemDelegate
 
-from driver.uart import *
 from lib.protocol_handler import *
 
 
@@ -16,9 +15,11 @@ class NonEditableDelegate(QStyledItemDelegate):
     return None
 
 
-class MainWindow(QMainWindow):
+class ProtocolHandlerGui(QMainWindow):
   def __init__(self):
-    super(MainWindow, self).__init__()
+    super(ProtocolHandlerGui, self).__init__()
+    self.is_init = False
+    self.name = "ProtocolHandler"
     self.ui = Ui_Launcher()
     self.ui.setupUi(self)
 
@@ -40,19 +41,20 @@ class MainWindow(QMainWindow):
     self.createAction("&New",    self.actNew, "Ctrl+N")
     self.createAction("&Delete", self.actDel, "Delete")
 
-    self.uart = Uart()
-    self.uart.rxd_thread.setEnableThread(False)
+    self.uart = uart
+    self.port = ""
 
     self.protocol_selected:QListWidgetItem = None
     self.object_selected:QTreeWidgetItem   = None
 
     self.btnScan()
 
+    self.is_init = True
+
   def __del__(self):
     pass
 
   def closeEvent(self, QCloseEvent):
-    self.uart.close()
     pass
 
   def setClickEvent(self, event_dst, event_func):
@@ -182,17 +184,17 @@ class MainWindow(QMainWindow):
       self.ui.pb_connect.setEnabled(False)
 
   def btnConnect(self):
-    port = self.ui.cb_port.currentText()
+    self.port = self.ui.cb_port.currentText()
     baud = int(self.ui.cb_baud.currentText())
 
-    if self.uart.isOpen() == True:
-      self.uart.close()
+    if self.uart.isOpen(self.port) == True:
+      self.uart.close(self.port)
       self.ui.pb_connect.setText("Connect")
       self.ui.cb_port.setEnabled(True)
       self.ui.cb_baud.setEnabled(True)
       self.ui.pb_scan.setEnabled(True)
     else:
-      if self.uart.open(port, baud) == True:
+      if self.uart.open(self.port, baud) == True:
         self.ui.pb_connect.setText("Disconnect")
         self.ui.cb_port.setEnabled(False)
         self.ui.cb_baud.setEnabled(False)
@@ -266,23 +268,3 @@ class MainWindow(QMainWindow):
       item.setFlags(item.flags() | Qt.ItemIsEditable)
 
     self.ui.tw_attribute_editor.insertTopLevelItems(0, items)
-
-
-def mainApp():
-  window = MainWindow()
-  window.show()
-  window.initUi()
-
-
-def main():
-  app = QApplication(sys.argv)
-
-  window = MainWindow()
-  window.show()
-
-  sys.exit(app.exec())
-
-
-if __name__ == "__main__":  
-  main()
-  

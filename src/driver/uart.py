@@ -73,25 +73,59 @@ class Uart:
     ret = False
 
     if len(args) == 1:
+      ret = True
+
       if args[0] == "info":
         print("uart list cnt :", len(self.uart_list))
-
-      if args[0] == "list":
+      elif args[0] == "list":
         print("--- opend port list ---")
         for port in self.uart_list.keys():
           print(port)
+      else:
+        ret = False
+    elif len(args) == 2:
+      ret = True
 
-    if len(args) == 2:
       if args[0] == "get":
         if args[1] == "ports":
           print("--- port list ---")
           for port in self.getPortList():
             print(port)
-
-        if args[1] == "bauds":
+        elif args[1] == "bauds":
           print("--- baud list ---")
           for baud in self.getBaudList():
             print(baud)
+        else:
+          ret = False
+      elif args[0] == "close":
+        port = args[1]
+        self.close(port)
+      elif args[0] == "available":
+        port = args[1]
+        available = self.available(port)
+        print("available :", available)
+      else:
+        ret = False
+    elif len(args) == 3:
+      ret = True
+
+      if args[0] == "open":
+        port = args[1]
+        baud = int(args[2])
+        open = self.open(port, baud)
+        print("Open port {0}:{1} {2}".format(port, baud, open))
+      elif args[0] == "read":
+        port = args[1]
+        size = int(args[2])
+        read = self.read(port, size)
+        print("rx data :", read)
+      elif args[0] == "write":
+        port = args[1]
+        data = bytes(args[2], encoding="utf-8")
+        self.write(port, data)
+      else:
+        ret = False
+    
 
     if ret == False:
       print("uart info")
@@ -100,6 +134,7 @@ class Uart:
       print("uart get bauds")
       print("uart open port[str] baud[int]")
       print("uart close port[str]")
+      print("uart available port[str]")
       print("uart read port[str] size[int]")
       print("uart write port[str] data")
       

@@ -1,5 +1,14 @@
 from define import *
 
+from thread.info.info_thread import InfoThread
+from thread.gui.gui_thread import GuiThread
+
+threads = [
+  InfoThread,
+  GuiThread
+]
+
+
 class Thread:
   def __init__(self):
     self.thread_list = []
@@ -24,18 +33,21 @@ class Thread:
   def cliCmd(self, args):
     ret = False
 
-    if len(args) == 1 and args[0] == "info":
-      print("is_all_thread_started :", self.is_all_thread_started)
-
+    if len(args) == 1:
       ret = True
 
-    if len(args) == 1 and args[0] == "list":
-      print("----- Thread List -----")
-      for thread in self.thread_list:
-        print(thread.name)
-      print("-----------------------")
+      if args[0] == "info":
+        print("is_all_thread_started :", self.is_all_thread_started)
 
-      ret = True
+      elif args[0] == "list":
+        print("----- Thread List -----")
+        for thread in self.thread_list:
+          print(thread.name)
+        print("-----------------------")
+
+      else:
+        ret = False
+
 
     if ret == False:
       print("thread info")

@@ -8,10 +8,6 @@ from lib.cli import cliAdd, cliKeepLoop, cliRunStr, cliMain
 
 from PySide6.QtCore import QThread
 
-from thread.info.info_thread import InfoThread
-from thread.gui.gui_thread import GuiThread
-
-from driver.gui.gui import MainWindow
 from driver.dxl import Dxl
 from driver.uart import Uart
 
@@ -25,10 +21,8 @@ USE_CLI = True
 """
 Variable
 """
-threads = [
-  InfoThread,
-  GuiThread
-]
+uart = Uart()
+
 
 
 """
